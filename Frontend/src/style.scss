@@ -1,0 +1,211 @@
+@use "./style/button.scss";
+
+// ── CSS Custom Properties (Design Tokens) ──────────────────────────────────
+:root {
+    --bg-deep: #06080f;
+    --bg-base: #0a0e1a;
+    --bg-surface: rgba(15, 20, 40, 0.6);
+    --bg-glass: rgba(20, 27, 55, 0.45);
+    --bg-glass-hover: rgba(25, 35, 70, 0.55);
+    --bg-input: rgba(12, 16, 32, 0.7);
+
+    --border-glass: rgba(100, 120, 200, 0.12);
+    --border-glass-hover: rgba(120, 140, 220, 0.22);
+    --border-accent: rgba(99, 102, 241, 0.4);
+
+    --text-primary: #eef2ff;
+    --text-secondary: #a5b4d4;
+    --text-muted: #6b7a99;
+
+    --accent-primary: #6366f1;
+    --accent-secondary: #818cf8;
+    --accent-glow: rgba(99, 102, 241, 0.3);
+    --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #c4b5fd 100%);
+
+    --cyan: #22d3ee;
+    --cyan-glow: rgba(34, 211, 238, 0.2);
+    --rose: #fb7185;
+    --rose-glow: rgba(251, 113, 133, 0.2);
+    --emerald: #34d399;
+    --amber: #fbbf24;
+
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    --radius-full: 9999px;
+
+    --blur-glass: blur(20px);
+    --blur-heavy: blur(40px);
+
+    --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.08), 0 0 80px rgba(139, 92, 246, 0.04);
+    --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 120, 200, 0.08);
+    --shadow-button: 0 4px 20px rgba(99, 102, 241, 0.3);
+
+    --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+// ── Reset & Base ────────────────────────────────────────────────────────────
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+    width: 6px;
+}
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 3px;
+    &:hover {
+        background: rgba(99, 102, 241, 0.4);
+    }
+}
+
+html, body, #root {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+// ── Accent Highlight ────────────────────────────────────────────────────────
+.highlight {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+// ── Animated Background Orbs ─────────────────────────────────────────────────
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+
+    &__orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.4;
+        animation: orb-float 20s ease-in-out infinite;
+
+        &--1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.3), transparent 70%);
+            top: -10%;
+            right: -5%;
+            animation-delay: 0s;
+        }
+        &--2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.25), transparent 70%);
+            bottom: -10%;
+            left: -5%;
+            animation-delay: -7s;
+        }
+        &--3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(34, 211, 238, 0.15), transparent 70%);
+            top: 40%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+    }
+}
+
+@keyframes orb-float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(30px, -40px) scale(1.05); }
+    50% { transform: translate(-20px, 20px) scale(0.95); }
+    75% { transform: translate(15px, 30px) scale(1.02); }
+}
+
+// ── Glass Card Utility ──────────────────────────────────────────────────────
+.glass-card {
+    background: var(--bg-glass);
+    backdrop-filter: var(--blur-glass);
+    -webkit-backdrop-filter: var(--blur-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+
+    &:hover {
+        border-color: var(--border-glass-hover);
+    }
+}
+
+// ── Loading Screen ──────────────────────────────────────────────────────────
+.loading-screen {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background: var(--bg-deep);
+
+    h1 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid rgba(99, 102, 241, 0.15);
+    border-top-color: var(--accent-primary);
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+// ── Utilities ───────────────────────────────────────────────────────────────
+.fade-in {
+    animation: fade-in-up 0.5s ease-out both;
+}
+
+@for $i from 1 through 6 {
+    .fade-in-delay-#{$i} {
+        animation: fade-in-up 0.5s ease-out #{$i * 0.08}s both;
+    }
+}
