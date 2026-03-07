@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-  baseURL: "https://interviewai-36e7.onrender.com",
-  withCredentials: true,
-});
+import api from "../../../lib/api";
 
 /**
  * @description Service to generate interview report based on user self description, resume and job description.

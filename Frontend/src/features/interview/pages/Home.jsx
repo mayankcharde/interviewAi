@@ -20,7 +20,9 @@ const Home = () => {
       selfDescription,
       resumeFile,
     });
-    navigate(`/interview/${data._id}`);
+    if (data?._id) {
+      navigate(`/interview/${data._id}`);
+    }
   };
 
   if (loading) {
