@@ -45,7 +45,6 @@
 // app.use("/api/interview", interviewRouter);
 
 // module.exports = app;
-
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -86,8 +85,8 @@ app.use(
   }),
 );
 
-// Handle preflight requests
-app.options("*", cors());
+// FIXED preflight handler
+app.options(/.*/, cors());
 
 // Routes
 const authRouter = require("./routes/auth.routes");
