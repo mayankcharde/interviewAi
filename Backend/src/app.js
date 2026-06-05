@@ -53,6 +53,7 @@ const app = express();
 
 const allowedOrigins = [
   "https://aiinterviewmodel.netlify.app",
+  "https://interview-ai-zeta-inky.vercel.app",
   "http://localhost:5173",
 ];
 
